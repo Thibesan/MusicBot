@@ -1,9 +1,10 @@
 const Discord = require('discord.js')
 const dotenv = require('dotenv')
 const { REST } = require('@discordjs/rest')
-const { Routes } = require('@discord-api-types/v9')
+const { Routes } = require("discord-api-types/v9")
 const fs = require('fs')
 const { Player } = require('discord-player')
+const { GatewayIntentBits } = require('discord.js')
 
 dotenv.config()
 const TOKEN = process.env.TOKEN //Bot Token ID, unique
@@ -15,7 +16,10 @@ const CLIENT_ID = '1058066067366367232'
 const GUILD_ID = '1058067278379368528'
 
 const client = new Discord.Client({
-	intents: ['GUILDS', 'GUILDS_VOICE_STATES'],
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildVoiceStates
+	]
 })
 
 client.slashcommands = new Discord.Collection()
@@ -32,7 +36,7 @@ const slashFiles = fs
 	.filter((file) => file.endsWith('.js'))
 
 for (const file of slashFiles) {
-	const slashcmd = require('./slashCommands/${file}')
+	const slashcmd = require(`./slashCommands/${file}`)
 	client.slashcommands.set(slashcmd.data.name, slashcmd)
 	if (LOAD_SLASH) commands.push(slashcmd.data.toJSON())
 }
