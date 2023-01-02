@@ -5,13 +5,12 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("skipto")
         .setDescription("Skips to certain song number")
-        .addNumberOption((option) => {
-            option
-                .setName("trackNumber")
+        .addNumberOption((option) => option
+                .setName("tracknumber")
                 .setDescription("Selected Track to Skip To")
                 .setMinValue(1)
                 .setRequired(true)  
-        }),
+        ),
         
     run: async ({client, interaction}) => {
         const queue = client.player.getQueue(interaction.guildId)

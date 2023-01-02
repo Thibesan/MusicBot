@@ -4,7 +4,6 @@ const { REST } = require('@discordjs/rest')
 const { Routes } = require("discord-api-types/v9")
 const fs = require('fs')
 const { Player } = require('discord-player')
-const { GatewayIntentBits } = require('discord.js')
 
 dotenv.config()
 const TOKEN = process.env.TOKEN //Bot Token ID, unique
@@ -17,8 +16,8 @@ const GUILD_ID = '1058067278379368528'
 
 const client = new Discord.Client({
 	intents: [
-		GatewayIntentBits.Guilds,
-		GatewayIntentBits.GuildVoiceStates
+		"GUILDS",
+		"GUILD_VOICE_STATES"
 	]
 })
 

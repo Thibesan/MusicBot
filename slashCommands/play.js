@@ -6,41 +6,35 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('play')
 		.setDescription('Loads Songs from YouTube')
-		.addSubcommand((subcommand) => {
-			subcommand
+		.addSubcommand((subcommand) => subcommand
 				.setName('song')
 				.setDescription('Loads Single Song from URL')
-				.addStringOption((option) => {
-					option
+				.addStringOption((option) => option
 						.setName('url')
 						.setDescription('Song URL')
 						.setRequired(true)
-				})
-		})
+				)
+		)
 
-		.addSubcommand((subcommand) => {
-			subcommand
+		.addSubcommand((subcommand) => subcommand
 				.setName('playlist')
 				.setDescription('Loads Playlist Songs from URL')
-				.addStringOption((option) => {
-					option
+				.addStringOption((option) => option
 						.setName('url')
 						.setDescription('Playlist URL')
 						.setRequired(true)
-				})
-		})
+				)
+		)
 
-		.addSubcommand((subcommand) => {
-			subcommand
+		.addSubcommand((subcommand) => subcommand
 				.setName('search')
 				.setDescription('Search for Song based on Keywords')
-				.addStringOption((option) => {
-					option
-						.setName('searchTerms')
+				.addStringOption((option) => option
+						.setName('searchterms')
 						.setDescription('Search Keywords')
 						.setRequired(true)
-				})
-		}),
+				)
+	),
 
 	run: async ({ client, interaction }) => {
 		if (!interaction.member.voice.channel)
@@ -67,7 +61,7 @@ module.exports = {
 			const song = result.tracks[0]
 			await queue.addTrack(song)
 			embed
-				.setDescription(`||${song.title} - ${song.url}|| has been added to the Queue||`)
+				.setDescription(`**${song.title} - ${song.url}** has been added to the Queue**`)
 				.setThumbnail(song.thumbnail)
 				.setFooter({ text: `Duration: ${song.duration}` })
 				
@@ -86,13 +80,13 @@ module.exports = {
 			const playlist = result.playlist
 			await queue.addTracks(result.tracks)
 			embed
-				.setDescription(`||${result.tracks.length} songs from ${playlist.title} - ${playlist.url}|| have been added to the Queue||`)
+				.setDescription(`**${result.tracks.length} songs from ${playlist.title} - ${playlist.url}** have been added to the Queue**`)
 				.setThumbnail(playlist.thumbnail)
 				.setFooter({ text: `Duration: ${playlist.duration}` })
 				
 		//Search Handler
 		} else if (interaction.options.getSubcommand() === 'search') {
-			let url = interaction.options.getString('searchTerms')
+			let url = interaction.options.getString('searchterms')
 			const result = await client.player.search(url, {
 				requestedBy: interaction.user,
 				searchEngine: QueryType.AUTO,
@@ -105,7 +99,7 @@ module.exports = {
 			const song = result.tracks[0]
 			await queue.addTrack(song)
 			embed
-				.setDescription(`||${song.title} - ${song.url}|| has been added to the Queue||`)
+				.setDescription(`**${song.title} - ${song.url}** has been added to the Queue**`)
 				.setThumbnail(song.thumbnail)
 				.setFooter({ text: `Duration: ${song.duration}` })
 		}
