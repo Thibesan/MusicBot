@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
-const { MessageEmbed } = require("discord.js")
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -12,7 +11,7 @@ module.exports = {
         if (!queue)
             return await interaction.editReply("There are no songs in the queue")
         
-        queue.destroy()
+        queue.destroy() //Clears queue, disconnects bot from voice channel
         await interaction.editReply("GoodBye!")
     }
         

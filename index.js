@@ -11,8 +11,8 @@ const TOKEN = process.env.TOKEN //Bot Token ID, unique
 //Initialize commands given load command, else compile normally
 const LOAD_SLASH = process.argv[2] == 'load'
 
-const CLIENT_ID = '1058066067366367232'
-const GUILD_ID = '1058067278379368528'
+const CLIENT_ID = '1058066067366367232' //Bot App ID
+const GUILD_ID = '1058067278379368528' //Server ID
 
 const client = new Discord.Client({
 	intents: [
@@ -28,7 +28,7 @@ client.player = new Player(client, {
 		highWaterMark: 1 << 25,
 	},
 })
-
+//Parse commands into array to be initialized sequentially
 let commands = []
 const slashFiles = fs
 	.readdirSync('./slashCommands')
@@ -39,7 +39,7 @@ for (const file of slashFiles) {
 	client.slashcommands.set(slashcmd.data.name, slashcmd)
 	if (LOAD_SLASH) commands.push(slashcmd.data.toJSON())
 }
-
+//Put Request to load slash commands onto bot
 if (LOAD_SLASH) {
 	const rest = new REST({ version: '9' }).setToken(TOKEN)
 	console.log('Deploying Slash Commands')
@@ -58,11 +58,12 @@ if (LOAD_SLASH) {
 		})
 } else {
 	client.on('ready', () => {
-		console.log(`Logged in as ${client.user.tag}`)
+		console.log(`Logged in as ${client.user.tag}`) //Login User Status
 	})
 	client.on('interactionCreate', (interaction) => {
 		async function handleCommand() {
-			if (!interaction.isCommand()) return
+			if (!interaction.isCommand())  //Error Handling
+				return 
 
 			const slashcmd = client.slashcommands.get(
 				interaction.commandName

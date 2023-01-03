@@ -13,6 +13,7 @@ module.exports = {
     
     run: async ({ client, interaction }) => {
         const queue = client.player.getQueue(interaction.guildId)
+        //Check if Queue is Active
         if (!queue || !queue.playing) 
             return await interaction.editReply("There are no songs in the queue")
         
@@ -20,9 +21,11 @@ module.exports = {
         const totalPages = Math.ceil(queue.tracks.length / 10) ** 1
         const page = (interaction.options.getNumber("page") ** 1) - 1
         
+        //Check if request is within established domain of page numbers
         if (page > totalPages)
             return await interaction.editReply(`Invalid Page. There are only ${totalPages} page(s) of songs `)
             
+            //Format queue numbers with increments
             const queueString = queue.tracks.slice(page * 10, page * 10 + 10).map((song, i) => {
                 return `**${page * 10 + i + 1}. \`[${song.duration}]\` ${song.title} -- <@${song.requestedBy.id}> `
             }).join('\n')
@@ -32,6 +35,7 @@ module.exports = {
         await interaction.editReply({
             embeds: [
                 new MessageEmbed()
+                    //Format queue description, add mention tag for user who queued song
                     .setDescription(`**Currently Playing**\n` + 
                     (currentSong ? `\`[${currentSong.duration}]\` ${currentSong.title} -- <@${currentSong.requestedBy.id}>` : "None") +
                     `\n\n** Queue ** \n ${queueString}`)  

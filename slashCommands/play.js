@@ -3,6 +3,7 @@ const { MessageEmbed } = require('discord.js')
 const { QueryType } = require('discord-player')
 
 module.exports = {
+	//Respective subcommands for each possible play scenario (URL, Playlist URL, Search)
 	data: new SlashCommandBuilder()
 		.setName('play')
 		.setDescription('Loads Songs from YouTube')
@@ -37,7 +38,7 @@ module.exports = {
 	),
 
 	run: async ({ client, interaction }) => {
-		if (!interaction.member.voice.channel)
+		if (!interaction.member.voice.channel) //Check if user is in a voice channel
 			return interaction.editReply('Must be in VC to use this command')
 
 		const queue = await client.player.createQueue(interaction.guild)
@@ -61,6 +62,7 @@ module.exports = {
 			const song = result.tracks[0]
 			await queue.addTrack(song)
 			embed
+			//Song String Formatting
 				.setDescription(`**${song.title} - ${song.url}** has been added to the Queue**`)
 				.setThumbnail(song.thumbnail)
 				.setFooter({ text: `Duration: ${song.duration}` })
@@ -80,6 +82,7 @@ module.exports = {
 			const playlist = result.playlist
 			await queue.addTracks(result.tracks)
 			embed
+			//Playlist String Formatting
 				.setDescription(`**${result.tracks.length} songs from ${playlist.title} - ${playlist.url}** have been added to the Queue**`)
 				.setThumbnail(playlist.thumbnail)
 				.setFooter({ text: `Duration: ${playlist.duration}` })
@@ -99,6 +102,7 @@ module.exports = {
 			const song = result.tracks[0]
 			await queue.addTrack(song)
 			embed
+				//Song String Formatting
 				.setDescription(`**${song.title} - ${song.url}** has been added to the Queue**`)
 				.setThumbnail(song.thumbnail)
 				.setFooter({ text: `Duration: ${song.duration}` })

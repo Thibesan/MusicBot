@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
-const { MessageEmbed } = require("discord.js")
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,11 +17,12 @@ module.exports = {
         if (!queue)
             return await interaction.editReply("There are no songs in the queue")
         
+        //Get User Input for Track Number in Queue
         const trackNum = interation.option.getNumber("trackNumber")
         if (trackNum > queue.tracks.length)
             return await interaction.editReply("Invalid Track Option")
             
-        queue.skipTo(trackNum - 1)
+        queue.skipTo(trackNum - 1) //Skip to respective array index of track number in queue
         await interaction.editReply(`Skipped Ahead to Track Number ${trackNum}`)
     }
         

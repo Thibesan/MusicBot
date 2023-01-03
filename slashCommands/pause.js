@@ -12,6 +12,7 @@ module.exports = {
             return await interaction.editReply("There are no songs in the queue")
         
         queue.setPaused(true)
+        //Reply formatted with code block for ease of use (reference for resume command)
         await interaction.editReply("Music Has been Paused!.\n Use \`/resume\` to resume the music")
     }
         

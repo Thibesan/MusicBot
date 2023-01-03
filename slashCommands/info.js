@@ -12,11 +12,12 @@ module.exports = {
         if (!queue)
             return await interaction.editReply("There are no songs in the queue")
         
-        let bar = queue.createProgressBar({
+        let bar = queue.createProgressBar({ //Progress of currently playing track (duration)
             queue: false, 
             length: 19
         })
         
+        //Show Thumbnail, Title, Url, and Duration Elapsed
         await interaction.editReply({
             embeds: [new MessageEmbed()
                 .setThumbnail(song.thumbnail)
